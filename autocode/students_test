@@ -5,6 +5,8 @@ import (
 	"testing"
 	"time"
 	"reflect"
+	"errors"
+	"strconv"
 )
 
 // DO NOT EDIT THIS FUNCTION
@@ -83,37 +85,37 @@ func Test_swap(t *testing.T) {
 	people.Swap(0, 1)
 
 	if people[0] != people2 || people[1] != people1 {
-		t.Errorf("Wrong People Swap")
+		t.Errorf("test for people swap")
 	}
 }
 
 func Test_new(t *testing.T) {
-	// actual, err := New("---")
-	// if actual != nil || !errors.Is(err, strconv.ErrSyntax) {
-	// 	t.Errorf("Wrong String Error")
-	// }
+	actual, err := New("A")
+	if actual != nil || !errors.Is(err, strconv.ErrSyntax) {
+		t.Errorf("Wrong String Error")
+	}
 
-	// actual, err = New("1 1 \n 2")
-	// if actual != nil || err.Error() != "Rows need to be the same length" {
-	// 	t.Errorf("Wrong Matrix Error")
-	// }
+	actual, err = New("1 1 \n 2")
+	if actual != nil || err.Error() != "Rows need to be the same length" {
+		t.Errorf("Wrong Matrix Error")
+	}
 
-	// actual, err = New("1 1 \n 2 3")
-	// expects := &Matrix{2, 2, []int{1, 1, 2, 3}}
+	actual, err = New("1 1 \n 2 3")
+	expects := &Matrix{2, 2, []int{1, 1, 2, 3}}
 
-	// if actual.cols != expects.cols || actual.rows != expects.rows || !reflect.DeepEqual(actual.data, expects.data) {
-	// 	t.Errorf("Wrong Empty Matrix")
-	// }
+	if actual.cols != expects.cols || actual.rows != expects.rows || !reflect.DeepEqual(actual.data, expects.data) {
+		t.Errorf("Wrong Empty Matrix")
+	}
 }
 
 func Test_rows(t *testing.T) {
-	matrix := &Matrix{2, 2, []int{4, 5, 6, 7}}
-	expects := [][]int{{4, 5}, {6, 7}}
+	m := &Matrix{2, 2, []int{1, 2, 3, 4}}
+	expect := [][]int{{1, 2}, {3, 4}}
 
-	actual := matrix.Rows()
+	row := m.Rows()
 
-	if !reflect.DeepEqual(actual, expects) {
-		t.Errorf("Wrong Rows Matrix")
+	if !reflect.DeepEqual(row, expect) {
+		t.Errorf("test for rows matrix")
 	}
 }
 
@@ -124,7 +126,7 @@ func Test_cols(t *testing.T) {
 	col := m.Cols()
 
 	if !reflect.DeepEqual(col, expect) {
-		t.Errorf("Wrong Cols Matrix")
+		t.Errorf("test for cols matrix")
 	}
 }
 
@@ -135,11 +137,11 @@ func Test_set(t *testing.T) {
 	set := m.Set(1, 1, 5)
 
 	if !set || !reflect.DeepEqual(m.data, expect) {
-		t.Errorf("Wrong Set Matrix")
+		t.Errorf("test for set matrix")
 	}
 
 	set = m.Set(-1, 1, 5)
 	if set {
-		t.Errorf("Wrong Set Error")
+		t.Errorf("test for set error matrix")
 	}
 }

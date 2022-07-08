@@ -5,6 +5,8 @@ import (
 	"testing"
 	"time"
 	"reflect"
+	"errors"
+	"strconv"
 )
 
 // DO NOT EDIT THIS FUNCTION
@@ -88,22 +90,22 @@ func Test_swap(t *testing.T) {
 }
 
 func Test_new(t *testing.T) {
-	// actual, err := New("---")
-	// if actual != nil || !errors.Is(err, strconv.ErrSyntax) {
-	// 	t.Errorf("Wrong String Error")
-	// }
+	actual, err := New("A")
+	if actual != nil || !errors.Is(err, strconv.ErrSyntax) {
+		t.Errorf("test for string error")
+	}
 
-	// actual, err = New("1 1 \n 2")
-	// if actual != nil || err.Error() != "Rows need to be the same length" {
-	// 	t.Errorf("Wrong Matrix Error")
-	// }
+	actual, err = New("1 1 \n 2")
+	if actual != nil || err.Error() != "Rows need to be the same length" {
+		t.Errorf("test for wrong matrix error")
+	}
 
-	// actual, err = New("1 1 \n 2 3")
-	// expects := &Matrix{2, 2, []int{1, 1, 2, 3}}
+	actual, err = New("1 1 \n 2 3")
+	expect := &Matrix{2, 2, []int{1, 1, 2, 3}}
 
-	// if actual.cols != expects.cols || actual.rows != expects.rows || !reflect.DeepEqual(actual.data, expects.data) {
-	// 	t.Errorf("Wrong Empty Matrix")
-	// }
+	if actual.cols != expect.cols || actual.rows != expect.rows || !reflect.DeepEqual(actual.data, expect.data) {
+		t.Errorf("test for empty matrix")
+	}
 }
 
 func Test_rows(t *testing.T) {
